@@ -151,8 +151,8 @@ public class BinaryTreeUse {
 		int s1=heightOfTree(root.left);
 		int s2=heightOfTree(root.right);
 		if(s1>s2)											//to find max height
-			return s1+1;
-		return s2+1;
+			return s1+1;	// Theese are the 
+		return s2+1;		//most important steps
 	}
 	
 //11
@@ -233,6 +233,28 @@ public class BinaryTreeUse {
 		}
 			
 	}
+//16	
+	static void NodesWithoutSiblings(BinaryTreeNode<Integer> root)
+	{
+		if(root==null)
+			return;
+		if(root.left==null&&root.right!=null)
+		{
+			System.out.println(root.right.data);
+		}
+		if(root.left!=null&&root.right==null)
+		{
+			System.out.println(root.left.data);
+		}
+		NodesWithoutSiblings(root.left);
+		NodesWithoutSiblings(root.right);
+	}
+	
+//17
+	static void removeleaf(BinaryTreeNode<Integer> root)//remove all the leaf nodes from the tree
+	{
+		
+	}
 	public static void main(String[] args) {
 //		BinaryTreeNode<Integer> root = new BinaryTreeNode<>(1);
 //		BinaryTreeNode<Integer> left = new BinaryTreeNode<>(2);
@@ -245,19 +267,19 @@ public class BinaryTreeUse {
 //		right.left=right_Left;
 		
 		
-		BinaryTreeNode<Integer> root = new BinaryTreeNode<>(1);
-		BinaryTreeNode<Integer> left = new BinaryTreeNode<>(2);
-		BinaryTreeNode<Integer> right = new BinaryTreeNode<>(3);
-		root.left=left;
-		root.right=right;
-		BinaryTreeNode<Integer> left_left= new BinaryTreeNode<>(4);
-		BinaryTreeNode<Integer> left_right = new BinaryTreeNode<>(5);
-		left.left=left_left;
-		left.right=left_right;
+//		BinaryTreeNode<Integer> root = new BinaryTreeNode<>(1);
+//		BinaryTreeNode<Integer> left = new BinaryTreeNode<>(2);
+//		BinaryTreeNode<Integer> right = new BinaryTreeNode<>(3);
+//		root.left=left;
+//		root.right=right;
+//		BinaryTreeNode<Integer> left_left= new BinaryTreeNode<>(4);
+//		BinaryTreeNode<Integer> left_right = new BinaryTreeNode<>(5);
+//		left.left=left_left;
+//		left.right=left_right;
 		
 		
 		
-//		BinaryTreeNode<Integer> root=takeInput(true,0,true);
+	//	BinaryTreeNode<Integer> root=takeInput(true,0,true);
 		
 //		printTree(root);
 		
@@ -286,6 +308,7 @@ public class BinaryTreeUse {
 //		replaceByDepth(root);
 		
 		
-		printTree(root);
+//		NodesWithoutSiblings(root);
+//		printTree(root);
 	}
 }

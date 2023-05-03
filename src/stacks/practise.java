@@ -1,54 +1,70 @@
 package stacks;
-
-public class practise {
+import linkedList.Node;
+public class practise
+{
 	
-	int arr[];
+	Node<Integer> head;
+	Node<Integer> tail;
 	int size;
-	int ind;
 	
 	public practise() {
-		arr=new int [10];
-		size=0;
-		ind =-1;
-		
+		head=null;
+		tail=null;
 	}
-	
-	void push(int n)
+	void push(int data)
 	{
-		if(ind+1==arr.length)
-			doublec();
-		arr[++ind]=n;
+		Node<Integer>n=new Node<Integer>(data);
+		if(head==null)
+		{
+			head=n;
+			tail=n;
+		}
+		else
+		{
+			tail.next=n;
+			tail=n;
+		}
 		size++;
 	}
 	
 	int pop()
 	{
-		if()
-		int t=arr[ind];
-		ind--;
+		Node<Integer> t=head;
+		if(head==null)
+			return -1;
+		if(head==tail)
+		{
+			int temp=head.data;
+			head=null;
+			tail=null;
+			size--;
+			return temp;
+		}
+		while(t.next.next!=null)
+		{
+			t=t.next;
+		}
+		int temp=tail.data;
+		tail=t;
 		size--;
-		return t;
+		return temp;		
 	}
 	
 	int top()
 	{
-		return arr[ind];
+		if(tail==null)
+			return -1;
+		return  tail.data;
 	}
 	
-	boolean isEmpty()
-	{
-		return ind==-1;
-	}
-	void doublec()
-	{
-		int t[];
-		t=arr;
-		arr=new int[2*t.length];
-		for(int i=0;i<t.length;i++)
-			arr[i]=t[i];
-	}
 	int size()
 	{
 		return size;
+	}
+	
+	boolean isEmp()
+	{
+		
+		return head==null;
 	}
 }
