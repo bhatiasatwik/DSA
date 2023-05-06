@@ -135,6 +135,38 @@ public class Stack_ques {
 				return -1;
 			else
 				return(open.size()/2);*/
+		
+//-----------------------------------------------------		
+		/*
+		 int c=0;
+		Stack<Character> stack = new Stack<>();
+		for(int i=0;i<s.length();i++)
+		{
+			if(s.charAt(i)=='(')
+				stack.push(s.charAt(i));
+			else
+				if(stack.isEmpty()==false&&stack.peek()=='(')
+				stack.pop();
+				else
+					stack.push(s.charAt(i));
+		}
+		if(stack.size()%2!=0)
+			return -1;
+		while(!stack.isEmpty())
+		{
+			if(stack.pop()==stack.peek())
+				{
+					c++;
+					stack.pop();
+				}
+			else
+			{
+				c=c+2;
+				stack.pop();
+				System.out.println("J");
+			}
+		}
+		return c;*/
 		Stack<Character> s1 = new Stack<>();
 		for(int i=0;i<s.length();i++)
 		{

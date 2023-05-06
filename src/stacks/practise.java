@@ -1,70 +1,41 @@
 package stacks;
-import linkedList.Node;
+import java.util.Stack;
 public class practise
 {
-	
-	Node<Integer> head;
-	Node<Integer> tail;
-	int size;
-	
-	public practise() {
-		head=null;
-		tail=null;
+	public static void main(String[] args) {
+		System.out.println(min(")))((("));
 	}
-	void push(int data)
+	static int min(String s)
 	{
-		Node<Integer>n=new Node<Integer>(data);
-		if(head==null)
+		int c=0;
+		Stack<Character> stack = new Stack<>();
+		for(int i=0;i<s.length();i++)
 		{
-			head=n;
-			tail=n;
+			if(s.charAt(i)=='(')
+				stack.push(s.charAt(i));
+			else
+				if(stack.isEmpty()==false&&stack.peek()=='(')
+				stack.pop();
+				else
+					stack.push(s.charAt(i));
 		}
-		else
-		{
-			tail.next=n;
-			tail=n;
-		}
-		size++;
-	}
-	
-	int pop()
-	{
-		Node<Integer> t=head;
-		if(head==null)
+		if(stack.size()%2!=0)
 			return -1;
-		if(head==tail)
+		while(!stack.isEmpty())
 		{
-			int temp=head.data;
-			head=null;
-			tail=null;
-			size--;
-			return temp;
+			if(stack.pop()==stack.peek())
+				{
+					c++;
+					stack.pop();
+				}
+			else
+			{
+				c=c+2;
+				stack.pop();
+				System.out.println("J");
+			}
 		}
-		while(t.next.next!=null)
-		{
-			t=t.next;
-		}
-		int temp=tail.data;
-		tail=t;
-		size--;
-		return temp;		
+		return c;
 	}
 	
-	int top()
-	{
-		if(tail==null)
-			return -1;
-		return  tail.data;
-	}
-	
-	int size()
-	{
-		return size;
-	}
-	
-	boolean isEmp()
-	{
-		
-		return head==null;
-	}
 }
