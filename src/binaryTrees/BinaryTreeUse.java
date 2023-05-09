@@ -1,5 +1,6 @@
 package binaryTrees;
-
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class BinaryTreeUse {
@@ -342,9 +343,158 @@ public class BinaryTreeUse {
 		 To do so we have created a class with 2 members namely 
 		 height(int) and is balanced(boolean).
 		 */
+	}
+	
+//20
+	static messenger diameter(BinaryTreeNode<Integer> root)	//diameter is defined as longest path betwen two leaf nodes 
+	{														//the two leaf nodes can be either in different subtree or same
+		if(root==null)
+		{
+			messenger  m= new messenger();
+			m.height=0;
+			m.diameter=0;
+		}
+		messenger m1=diameter(root.left);
+		messenger m2=diameter(root.right);
+		messenger main = new messenger();
+		main.height=(Math.max(m1.height, m2.height)+1);
+		main.diameter=Math.max(Math.max(m1.diameter,m2.diameter),m1.height+m2.height+1);//imp.....
+		return main;
+		//can refer to love babbar video(Q-2) ==> https://www.youtube.com/watch?v=nHMQ33LZ6oA
+	}
+	
+//21
+	static BinaryTreeNode<Integer> takeInputLevelwise()
+	{
+		int c=0;
+		Queue<BinaryTreeNode<Integer>> q = new LinkedList<BinaryTreeNode<Integer>>();
+		BinaryTreeNode<Integer> root=null;
+		Scanner scn = new Scanner(System.in);
+		System.out.println("Enter the root data value babes");
+		int n= scn.nextInt();
+		if(n==-1)
+			return root;
+		BinaryTreeNode<Integer> node= new BinaryTreeNode<Integer>(n);
+		root=node;
+		q.add(root);
+		boolean isLeft=true;
+		do {
 			
+			if(c==2)
+			{
+				q.remove();
+				c=0;
+			}
+			if(q.isEmpty()==true)
+			{
+				break;
+			}
+			if(isLeft)
+			{
+				isLeft=!isLeft;
+				c++;
+				System.out.println("Enter the left value of "+q.peek().data);
+				n=scn.nextInt();
+				if(n==-1)
+					continue;
+				BinaryTreeNode<Integer>node1= new BinaryTreeNode<Integer>(n);
+				q.peek().left=node1;
+				q.add(node1);
+			}
+			else
+			{
+				isLeft=!isLeft;
+				c++;
+				System.out.println("Enter the right value of "+q.peek().data);
+				n=scn.nextInt();
+				if(n==-1)
+					continue;
+				BinaryTreeNode<Integer>node1= new BinaryTreeNode<Integer>(n);
+				q.peek().right=node1;
+				q.add(node1);
+				
+			}
 			
+		} while (q.isEmpty()!=true);
+		scn.close();  	
+		return root;
+	}
+	
+//22
+	static void printLevelWise(BinaryTreeNode<Integer> root)
+	{
+		if(root==null)
+			return ;
+		Queue<BinaryTreeNode<Integer>> q = new LinkedList<BinaryTreeNode<Integer>>();
+		q.add(root);
+		while(true)
+		{
+			System.out.println();
+			if(q.isEmpty()==true)
+				break;
+			System.out.print(q.peek().data+":");
+			if(q.peek().left!=null)
+			{
+				System.out.print("L:"+q.peek().left.data);
+			}
+			else
+			{
+				System.out.print("L:"+"-1");
+			}
+			if(q.peek().right!=null)
+			{
+				System.out.print(",R:"+q.peek().right.data+" ");	
+			}
+			else
+			{
+				System.out.print("R:"+"-1");
+			}
+			if(q.peek().left!=null)
+			q.add(q.peek().left);
+			if(q.peek().right!=null)
+			q.add(q.peek().right);
+			q.remove();
+		}
+	}
+	
+//23
+	static BinaryTreeNode<Integer> create(int in[],int pre[])
+	{
+		/*
+		 Steps to be followed are as follows:-
+		 
+		 1) Find the root
+		 
+		 2)find inorder of both left and right 
+		 subtree
+		 
+		 3)find preorder of left and right
+		 4)use recursion to build left and right 
+		 subtree
+		 
+		 5)link both subtree(Left and right respectively)
+		 to the root and return the root
+		 
+		 */
+		return helperToCreate(in,pre,0,in.length-1,0,pre.length-1);
+	}
+	static BinaryTreeNode<Integer> helperToCreate(int in[],int pre[],int in_start,int in_end,int pre_start,int pre_end)
+	{
+		int i=0;
+		if(in_start==in.length||pre_start==pre.length)
+			return null;
+		for( i=0;i<in.length;i++)
+		{
+			if(in[i]==pre[0])
+				break;
+		}
 		
+		BinaryTreeNode<Integer> small_left=helperToCreate(in,pre,0,i-1,1,i);
+		BinaryTreeNode<Integer> small_right=helperToCreate(in, pre, i+1, in.length-1, i+1, pre.length);
+		BinaryTreeNode<Integer> root= new BinaryTreeNode<Integer>(pre[0]);
+		root.left=small_left;
+		root.right=small_right;
+		return root;
 	}
 	
 	public static void main(String[] args) {
@@ -377,12 +527,15 @@ public class BinaryTreeUse {
 		
 		//printTree(root);
 		
+		//BinaryTreeNode<Integer> root= takeInputLevelwise();
 		
+	//	BinaryTreeNode<Integer> root=takeInput(true,0,true);
+	//	System.out.println(isBalanced(root).isBalanced);
 		
-		BinaryTreeNode<Integer> root=takeInput(true,0,true);
-		System.out.println(isBalanced(root).isBalanced);
-		
-//		printTree(root);
+		//printPreOrder(root);
+		int a[]= {1,2,4,5,3,6,7};
+		int b[]= {4,2,5,1,6,3,7};
+		create(b, a);
 		
 //		printPreOrder(root);
 		
@@ -411,5 +564,6 @@ public class BinaryTreeUse {
 		
 //		NodesWithoutSiblings(root);
 //		printTree(root);
+		
 	}
 }
