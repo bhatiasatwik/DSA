@@ -473,30 +473,171 @@ public class BinaryTreeUse {
 		 subtree
 		 
 		 5)link both subtree(Left and right respectively)
-		 to the root and return the root
+		 to the root and return the root 
+		 
+		 
+		 //Every data should be unique.............
 		 
 		 */
 		return helperToCreate(in,pre,0,in.length-1,0,pre.length-1);
 	}
-	static BinaryTreeNode<Integer> helperToCreate(int in[],int pre[],int in_start,int in_end,int pre_start,int pre_end)
+	static BinaryTreeNode<Integer> helperToCreate(int in[],int pre[],int siIn,int eiIn,int siPre,int eiPre)
 	{
-		int i=0;
-		if(in_start==in.length||pre_start==pre.length)
+		if(siPre>eiPre)
 			return null;
-		for( i=0;i<in.length;i++)
+		int rootindexinorder=0;
+		for(int i=siIn;i<eiIn;i++)
 		{
-			if(in[i]==pre[0])
+			if(in[i]==pre[siPre])
+			{
+				rootindexinorder=i;
 				break;
+			}
 		}
 		
-		BinaryTreeNode<Integer> small_left=helperToCreate(in,pre,0,i-1,1,i);
-		BinaryTreeNode<Integer> small_right=helperToCreate(in, pre, i+1, in.length-1, i+1, pre.length);
-		BinaryTreeNode<Integer> root= new BinaryTreeNode<Integer>(pre[0]);
-		root.left=small_left;
-		root.right=small_right;
+		int leftlength=rootindexinorder-siIn;
+		
+		int leftprestart=siPre+1;
+		int leftpreend=leftprestart+leftlength-1;
+		int leftinstart=siIn;
+		int leftinend=rootindexinorder-1;
+		
+		int rightprestart=leftpreend+1;
+		int rightpreend=eiPre;
+		int rightinstart=rootindexinorder+1;
+		int rightinend=0;//eiIn;
+		
+		BinaryTreeNode<Integer> left=helperToCreate(in, pre, leftinstart, leftinend, leftprestart, leftpreend);
+		BinaryTreeNode<Integer> right=helperToCreate(in, pre, rightinstart, rightinend, rightprestart, rightpreend);
+		BinaryTreeNode<Integer> root=new BinaryTreeNode<Integer>(pre[siPre]);
+		root.left=left;
+		root.right=right;
+		
 		return root;
+		
 	}
 	
+//24
+	public static void insertDuplicate(BinaryTreeNode<Integer> root)
+	{
+		/*
+	  	For a given a Binary Tree of type integer, duplicate every node of 
+	   	the tree and attach it to the left of itself.
+	   	The root will remain the same. So you just need to
+ 		insert nodes in the given Binary Tree......
+		 */
+		
+		
+		if(root==null)
+			return;
+		insertDuplicate(root.left);
+		insertDuplicate(root.right);
+		BinaryTreeNode<Integer> duplicateNode = new BinaryTreeNode<Integer>(root.data);
+		BinaryTreeNode<Integer> temp=root.left;
+		root.left=duplicateNode;
+		duplicateNode.left=temp;
+		
+	}
+	
+//25
+	static messenger minMax(BinaryTreeNode<Integer> root)
+	{
+		return minMaxHelper(root,root.data,root.data);
+	}
+	static messenger minMaxHelper(BinaryTreeNode<Integer>  root,int min,int max)
+	{
+		if(root==null)
+		{
+			messenger m = new messenger();
+			m.min=min;
+			m.max=max;
+			return m;
+		}
+		messenger Leftm=minMaxHelper(root.left, min, max);
+		messenger Rightm=minMaxHelper(root.right,min,max);
+		int newMin=Math.min(Leftm.min,Rightm.min);
+		int newMax=Math.max(Leftm.max,Rightm.max);
+		messenger main = new messenger();
+		if(root.data>newMax)
+		{
+			main.max=root.data;
+		}
+		else
+		{
+			main.max=newMax;
+		}
+		if(root.data<newMin)
+		{
+			main.min=root.data;
+		}
+		else
+		{
+			main.min=newMin;
+		}
+		return main;
+	}
+	
+//26
+	static void pathK(BinaryTreeNode<Integer> root , int k , String s)
+	{
+		/*
+		 For a given Binary Tree of type integer and a number K, print 
+		 out all root-to-leaf paths where the sum of all the node data 
+		 along the path is equal to K.
+		 */
+		
+		if(root==null)//imp to prevent stackOverFlow error
+			return;
+			if(root.left==null&&root.right==null)//checking if current node is leaf node
+			{
+				if(k==root.data)
+				{
+					s=s+" "+root.data;
+					System.out.println(s);
+				}
+				return;
+			}
+			s=s+" " +root.data;
+			pathK(root.left, k-root.data, s);//k-root.data to be passed.........IMP!!!
+			pathK(root.right,k-root.data,s);
+	}
+	
+//27
+	public static void printLevelWiseII(BinaryTreeNode<Integer> root)
+	{
+		Queue<BinaryTreeNode<Integer>> q = new LinkedList<BinaryTreeNode<Integer>>();
+		q.add(root);
+		q.add(null);//act as a delimiter
+		while(true)
+		{
+			if(q.isEmpty()==true)
+				break;
+			if(q.peek()==null)
+			{
+				q.poll();
+				if(q.isEmpty())
+					break;
+				else {
+				System.out.println();
+				q.add(null);
+				}
+				
+			}
+			else
+			{
+				System.out.print(q.peek().data+" ");
+				if(q.peek().left!=null)
+				q.add(q.peek().left);
+				if(q.peek().right!=null)
+				q.add(q.peek().right);
+				q.poll();
+			}
+		}
+		
+	}
+//28
+	
+		
 	public static void main(String[] args) {
 //		BinaryTreeNode<Integer> root = new BinaryTreeNode<>(1);
 //		BinaryTreeNode<Integer> left = new BinaryTreeNode<>(2);
@@ -528,6 +669,12 @@ public class BinaryTreeUse {
 		//printTree(root);
 		
 		//BinaryTreeNode<Integer> root= takeInputLevelwise();
+		//insertDuplicate(root);
+		//printLevelWiseII(root);
+		
+		//messenger recieve=minMax(root);
+		//System.out.println(recieve.max+" "+recieve.min);
+		//printLevelWise(root);
 		
 	//	BinaryTreeNode<Integer> root=takeInput(true,0,true);
 	//	System.out.println(isBalanced(root).isBalanced);
@@ -535,8 +682,8 @@ public class BinaryTreeUse {
 		//printPreOrder(root);
 		int a[]= {1,2,4,5,3,6,7};
 		int b[]= {4,2,5,1,6,3,7};
-		create(b, a);
-		
+		printLevelWise(create(b, a)); 
+//		
 //		printPreOrder(root);
 		
 //		printPostOrder(root);
