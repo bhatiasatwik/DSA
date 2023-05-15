@@ -1,5 +1,7 @@
 package linkedList;
 import java.util.*;
+
+import binaryTrees.BinaryTreeNode;
 public class NodeUse {
 	
 //1	
@@ -165,7 +167,7 @@ public class NodeUse {
 		return t1;*/
 		
 		
-		Node<Integer> tail=head,temp=null;
+		Node<Integer> tail=head;
 		for(int i=0;i<n-1;i++)
 		{
 			tail=tail.next;
@@ -239,7 +241,7 @@ public class NodeUse {
 		return head;
 	}
 	
-	
+//10	
 	static int length(Node<Integer> n)
 	{
 		int c=0;
@@ -252,7 +254,7 @@ public class NodeUse {
 		return c;
 	}
 		
-	
+//11	
 		static void increment(Node<Integer> n)
 		{	
 			while(n!=null)
@@ -262,7 +264,7 @@ public class NodeUse {
 				}
 		}
 		
-		
+//12		
 		static void print(Node<Integer> head)
 		{
 			while(head!=null)
@@ -272,7 +274,7 @@ public class NodeUse {
 			}
 		}
 		
-		
+//13		
 		static Node<Integer> create()
 		{
 			Node<Integer>n1=new Node<Integer>(10);
@@ -287,7 +289,7 @@ public class NodeUse {
 			return n1;
 	}
 		
-
+//14
 		static Node<Integer> insertRec(Node<Integer> head,int v,int n)
 		{
 			if(head==null&&n>0)			 // Note that we have written the 
@@ -303,7 +305,7 @@ public class NodeUse {
 					return head;
 			}
 			
-			
+//15		
 			static Node<Integer> deleteRec(Node<Integer>head,int pos)
 			{
 				if(head==null)
@@ -319,7 +321,8 @@ public class NodeUse {
 				return head;
 				}
 			}
-			
+
+//16
 			static Node<Integer> revRec(Node<Integer> head )
 			{
 				/*if(head.next==null)
@@ -334,15 +337,16 @@ public class NodeUse {
 				
 //				Better approach:-
 				
-				if(head==null||head.next==null)					//we first compare head
+				if(head==null||head.next==null)	//for case of LL containing 0||1 number of elements...........				//we first compare head
 					return head;												//as if head is null .next 
 				Node<Integer> sa=revRec(head.next);			//will give null pointer
 				head.next.next=head;										//so we use shortcircuit
-				head.next=null;
+				head.next=null;///we do this step as head-> next and next-> thus we may get circular LL  (ERRORR!!!)
 				return sa;
 				
 			}
 			
+//17
 			static Node<Integer> middle(Node<Integer> head)
 			{
 				if (head ==null)
@@ -360,9 +364,14 @@ public class NodeUse {
 					f=f.next.next;
 				}
 			}
-			
+//18			
 			static Node<Integer> merge(Node<Integer> head1,Node<Integer> head2)
 			{
+				
+				/*
+				 	INFO:-Merge two sorted LL into a third sorted one.....
+				*/
+				
 				/*Node<Integer> head=null;
 				Node<Integer> t=null;
 				if(head1.data<=head2.data)
@@ -439,8 +448,8 @@ public class NodeUse {
 				
 			}
 			
-			
-	static Node<Integer> oddEven(Node<Integer> head)
+//19			
+	static Node<Integer> oddEven(Node<Integer> head)// seggregate the odd and even elements of a LL (ODD the EVEN).
 		{
 			Node<Integer> oh =null;
 			Node<Integer> eh =null;
@@ -488,9 +497,19 @@ public class NodeUse {
 													//did lastevenelem.next=null
 	
 	
-	
+//20
 	static Node<Integer> traverse(Node<Integer> head,int m,int n)
 	{
+		/*
+		 * You have been given a singly linked list of integers along
+		 *  with two integers, 'M,' and 'N.' Traverse the linked list
+		 *  such that you retain the 'M' nodes, then delete the next 'N' nodes.
+		 *   Continue the same until the end of the linked list.
+			To put it in other words, in the given linked list, you need to 
+			delete N nodes after every M nodes.
+		 */
+		
+		
 		/*Node<Integer> tail=head;
 		Node<Integer> temp=null;
 		while(tail!=null)
@@ -553,7 +572,7 @@ public class NodeUse {
 		
 		
 	}
-	
+//21	
 		static Node<Integer> swap(Node <Integer> head ,int i,int j)
 		{
 			int s=i+j;
@@ -561,7 +580,7 @@ public class NodeUse {
 			j=s-i;
 			if(head==null||i==j)
 				return head;
-			Node<Integer> tail=head,temp=head,r1=null,r2=null,p1=null,p2=null,t=null;
+			Node<Integer> temp=head,r1=null,r2=null,p1=null,p2=null,t=null;
 			for(int k=0;temp!=null;k++)
 			{
 				if(k==i-1)
@@ -602,7 +621,7 @@ public class NodeUse {
 			return head;
 				
 		}
-		
+//22	
 		static Node<Integer> append(Node<Integer> head,int n)
 		{
 			/*int l=0;
@@ -627,7 +646,7 @@ public class NodeUse {
 			return t1;*/
 			 
 //										*****Better approach*****
-			Node<Integer> fast=head,slow=head,newhead=head,temp=null;
+			Node<Integer> fast=head,slow=head,temp=null;
 			if(n==0||head==null)
 				return head;
 			for(int i=1;i<=n;i++)
@@ -648,7 +667,7 @@ public class NodeUse {
 		}
 		
 		
-		
+//23		
 		static Node<Integer> kRev(Node<Integer> head,int k)
 		{
 			/*Node<Integer>tail=head,nh=null,nt=null, t=null,th=null;
@@ -689,6 +708,11 @@ public class NodeUse {
 			return nh;*/
 			
 			
+			
+			
+			
+			
+			
 			Node<Integer>tail=head,nh=null,nt=null, t=null,th=null;
 		if(k==0||k==1)
 			return head;
@@ -700,13 +724,13 @@ public class NodeUse {
 						break;;
 					tail=tail.next;
 				}
-				/*if(tail==null)						..will reverse..
-				{
-					if(nt==null)
-						return null;
-					nt.next=head;
-					return nh;
-				}*/
+				//if(tail==null)						..will reverse..
+//				{
+//					if(nt==null)
+//						return null;
+//					nt.next=head;
+//					return nh;
+//				}
 				t=tail.next;
 				tail.next=null;
 				th=revRec(head);	
@@ -725,10 +749,15 @@ public class NodeUse {
 				head=t;
 			}
 			return nh;
-		}
+			/*
+			 * Note:- you keep on building the LL
+			 * if rev the rem-call rev on remaing and merger to final
+			 * else just merge as it is...
+			 */
+			}
 		
 		
-		
+//24		
 		static Node<Integer> addNumber(Node<Integer> head)
 		{
 			Node <Integer>rh=null,t=null;
@@ -758,7 +787,7 @@ public class NodeUse {
 			}
 		
 
-
+//25
 	static Node<Integer> removeKdata(Node<Integer> head,int k)//removes elemnt with data value k
 	{
 		
@@ -792,13 +821,13 @@ public class NodeUse {
 		return tail;
 	}
 	
-	
+//26
 	static Node<Integer> sort012(Node<Integer> head)
 	{
-		Node<Integer> zh=new Node<Integer>(-1);	//Dummy
+		Node<Integer> zh=new Node<Integer>(-1);		//Dummy
 		Node<Integer> oh=new Node<Integer>(-1);		//Nodes
 		Node<Integer> th=new Node<Integer>(-1);		//Create
-		Node<Integer> zt=zh,ot=oh,tt=th;						//.....tails....
+		Node<Integer> zt=zh,ot=oh,tt=th;			//.....tails....
 		while(head!=null)
 		{
 			if(head.data==0)
@@ -836,12 +865,29 @@ public class NodeUse {
 		return zh;
 	        	
 	    }
+
+//27	
+	public static int findNodeRec(Node<Integer> head, int n) 
+	{
+		/*return index of specific node*/
 		
+        if(head==null)
+        	return -1;
+        int sa = findNodeRec(head.next,n);
+        if(head.data==n)
+        	return 0;
+        if(sa==-1)
+        	return sa;
+        return sa+1;
+     	
+	}
 	
+	
+//28	
 	static Node<Integer> BubbleSort(Node<Integer> head){
 		Node<Integer> tail=head,tail1=head;
 		int t=0;
-		for(int i=0;tail.next!=null;tail=tail.next)
+		for(;tail.next!=null;tail=tail.next)
 		{
 			for(;tail1!=null&&tail1.next!=null;tail1=tail1.next)
 			{
@@ -857,5 +903,66 @@ public class NodeUse {
 		return head;
 	}
 	
+//29
+	static Node<Integer> mergeSort(Node<Integer> head)
+	{
+		if(head.next==null)
+			return head;
+		Node<Integer> f=head,s=head,temp=null,nh=null,nt=null;
+		while(f.next!=null&&f.next.next!=null)
+		{
+			f=f.next.next;
+			s=s.next;
+		}
+			temp=s.next;
+			s.next=null;
+			Node<Integer> left=mergeSort(head);
+			Node<Integer> right=mergeSort(temp);
+			while(left!=null&&right!=null)
+			{
+				if(left.data<right.data)
+				{
+					if(nh==null)
+					{
+						nh=left;
+						nt=left;
+					}
+					else
+					{
+						nt.next=left;
+						nt=nt.next;
+					}
+					left=left.next;
+				}
+				else
+				{
+					if(nh==null)
+					{
+						nh=right;
+						nt=right;
+					}
+					else
+					{
+						nt.next=right;
+						nt=nt.next;
+					}
+					right=right.next;
+				}
+			}
+				if(left!=null)
+				{
+					nt.next=left;
+				}
+				else
+				{
+					nt.next=right;
+				}
+				return nh;
+			
+			
+		}
+		
+		
+	}
 	
-}
+	

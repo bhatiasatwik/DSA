@@ -184,7 +184,7 @@ public class BinaryTreeUse {
 	{
 		if(root==null)
 			return;
-		if(k==1) {
+		if(k==0) {
 			System.out.println(root.data);
 			return;}
 		printAtDepthK(root.left, k-1);//Do not do k--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -479,42 +479,28 @@ public class BinaryTreeUse {
 		 //Every data should be unique.............
 		 
 		 */
-		return helperToCreate(in,pre,0,in.length-1,0,pre.length-1);
+		return (helperToCreate(in,pre,0,in.length-1,0,pre.length-1));
 	}
 	static BinaryTreeNode<Integer> helperToCreate(int in[],int pre[],int siIn,int eiIn,int siPre,int eiPre)
 	{
 		if(siPre>eiPre)
 			return null;
-		int rootindexinorder=0;
-		for(int i=siIn;i<eiIn;i++)
+		int index=0;
+		for(int i=siIn;i<=eiIn;i++)
 		{
 			if(in[i]==pre[siPre])
 			{
-				rootindexinorder=i;
+				index=i;
 				break;
 			}
 		}
-		
-		int leftlength=rootindexinorder-siIn;
-		
-		int leftprestart=siPre+1;
-		int leftpreend=leftprestart+leftlength-1;
-		int leftinstart=siIn;
-		int leftinend=rootindexinorder-1;
-		
-		int rightprestart=leftpreend+1;
-		int rightpreend=eiPre;
-		int rightinstart=rootindexinorder+1;
-		int rightinend=0;//eiIn;
-		
-		BinaryTreeNode<Integer> left=helperToCreate(in, pre, leftinstart, leftinend, leftprestart, leftpreend);
-		BinaryTreeNode<Integer> right=helperToCreate(in, pre, rightinstart, rightinend, rightprestart, rightpreend);
-		BinaryTreeNode<Integer> root=new BinaryTreeNode<Integer>(pre[siPre]);
+		int length=index-siIn;
+		BinaryTreeNode<Integer> root = new BinaryTreeNode<Integer>(pre[siPre]);
+		BinaryTreeNode<Integer> left=helperToCreate(in,pre,siIn,index-1,siPre+1,siPre+1+length-1);
+		BinaryTreeNode<Integer> right=helperToCreate(in,pre,index+1,eiIn,siPre+1+length-1+1,eiPre);
 		root.left=left;
 		root.right=right;
-		
 		return root;
-		
 	}
 	
 //24
@@ -603,7 +589,7 @@ public class BinaryTreeUse {
 	}
 	
 //27
-	public static void printLevelWiseII(BinaryTreeNode<Integer> root)
+	public static void printLevelWiseII(BinaryTreeNode<Integer> root)//level order traversal
 	{
 		Queue<BinaryTreeNode<Integer>> q = new LinkedList<BinaryTreeNode<Integer>>();
 		q.add(root);
@@ -636,6 +622,45 @@ public class BinaryTreeUse {
 		
 	}
 //28
+	static int printAtKthDistance(BinaryTreeNode<Integer> root, int target, int k)//print all the nodes at dsitance k from target
+	{
+		if(root==null)
+			return -1;
+		if(root.data==target)
+		{
+			printAtDepthK(root, k);
+			return 0;
+		}
+		int leftDistance=printAtKthDistance(root.left, target, k);
+		if(leftDistance!=-1)
+		{
+			if(leftDistance+1==k)
+			{
+				System.out.println(root.data);
+				return leftDistance+1;
+			}
+			else
+			{
+				printAtDepthK(root.right,k-leftDistance-2);
+				return leftDistance+1;
+			}
+		}
+		int rightDistance=printAtKthDistance(root.right, target, k);
+		if(rightDistance!=-1)
+		{
+			if(rightDistance+1==k)
+			{
+				System.out.println(root.data);
+				return rightDistance+1;
+			}
+			else
+			{
+				printAtDepthK(root.left, k-rightDistance-2);
+				return rightDistance+1;
+			}
+		}
+		return -1;
+	}
 	
 		
 	public static void main(String[] args) {
@@ -680,9 +705,10 @@ public class BinaryTreeUse {
 	//	System.out.println(isBalanced(root).isBalanced);
 		
 		//printPreOrder(root);
-		int a[]= {1,2,4,5,3,6,7};
-		int b[]= {4,2,5,1,6,3,7};
-		printLevelWise(create(b, a)); 
+		int in[]= {2,1,3};
+		int pre[]= {1,2,3};
+		printLevelWise(create(in,pre)); 
+		//printAtKthDistance(takeInputLevelwise(), 5, 3);
 //		
 //		printPreOrder(root);
 		
