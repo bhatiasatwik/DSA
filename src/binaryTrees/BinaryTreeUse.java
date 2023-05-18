@@ -483,7 +483,7 @@ public class BinaryTreeUse {
 	}
 	static BinaryTreeNode<Integer> helperToCreate(int in[],int pre[],int siIn,int eiIn,int siPre,int eiPre)
 	{
-		if(siPre>eiPre)
+		if(siIn>eiIn)//or siPre>eiPre
 			return null;
 		int index=0;
 		for(int i=siIn;i<=eiIn;i++)
