@@ -1,5 +1,8 @@
 package binaryTrees;
 
+import linkedList.Node;
+import linkedList.NodeUse;
+
 public class BinarySearchTree {
 
 //1
@@ -163,9 +166,53 @@ public class BinarySearchTree {
 			}
 			main.smallest=Math.min(root.data,(Math.min(left.smallest,right.smallest)));
 			main.largest=Math.max(root.data,(Math.max(left.largest,right.largest)));
-			return main;
+			return main;	
+		}
+	
+//5
+		public static NodePair convert(BinaryTreeNode<Integer> root)
+		{
+			//Convert the given BST into a SORTED Linked List;
 			
-//			
+			if(root==null)
+			{
+				NodePair n = new NodePair();
+				n.head=null;
+				n.tail=null;
+				return n;
+			}
+			
+			NodePair left= convert(root.left);
+			NodePair right= convert(root.right);
+			NodePair current = new NodePair();
+			Node<Integer> rt= new Node<Integer>(root.data);
+			if(left.head!=null)
+			{
+				left.tail=rt;
+				rt.next=right.head;
+				current.head=left.head;
+				current.tail=right.tail;
+			}
+			else
+			{
+				rt.next=right.head;
+				current.head=rt;
+				current.tail=right.tail;
+			}
+			return current;
+		}
+		
+//6
+		public static int replace(BinaryTreeNode<Integer> root)
+		{
+			if(root==null)
+			{
+				return 0;
+			}
+			int left=replace(root.left);
+			int right=replace(root.right);
+			root.data+=right;
+			return root.data;
 		}
 
 	public static void main(String[] args) 
@@ -174,9 +221,9 @@ public class BinarySearchTree {
 		
 		//int a[]= {1,2,3,4,5,6,7};
 		BinaryTreeNode<Integer> root= n.takeInputLevelwise();
-			bstMessenger b = isBST(root);
-			System.out.println(b.isBalanced);
-			
+		replace(root);
+		n.printLevelWise(root);
+		
 }	
 	}
 
